@@ -5,6 +5,7 @@ import com.IssatSo.AppWeb.Dto.RequestEtudiantUpdate;
 import com.IssatSo.AppWeb.Dto.ResponseEtudiant;
 import com.IssatSo.AppWeb.Entities.Etudiant;
 import com.IssatSo.AppWeb.Repository.EtudiantRepository;
+import com.IssatSo.AppWeb.Repository.ListeEtudiantInscritRepository;
 import com.IssatSo.AppWeb.Service.EtudiantService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +21,18 @@ import java.util.Optional;
 public class EtudiantServiceImpl implements EtudiantService {
 @Autowired
 private EtudiantRepository etudiantRepository;
+@Autowired
+private ListeEtudiantInscritRepository listeEtudiantInscritRepository;
     private final PasswordEncoder passwordEncoder;
+    private boolean isEtudiantExist(String cin){
+        if(listeEtudiantInscritRepository.existsByCin(cin)){
+            return true;
+        }else {
+        return false;}
+    }
     @Override
     public void CreateEtudiant(RequestEtudiant EtudiantRequest) {
+        if (isEtudiantExist(EtudiantRequest.getCin())){
 Etudiant etudiant = Etudiant.builder()
         .nom(EtudiantRequest.getNom())
         .prenom(EtudiantRequest.getPrenom())
@@ -39,7 +49,9 @@ Etudiant etudiant = Etudiant.builder()
         .password(passwordEncoder.encode(EtudiantRequest.getPassword()))
         .build();
 etudiantRepository.save(etudiant);
-    }
+    }else {
+            throw new IllegalStateException("L'étudiant n'est pas inscrit dans la liste des étudiants inscrits");
+        }}
 
     @Override
     public boolean deleteEtudiant(Long id) {
