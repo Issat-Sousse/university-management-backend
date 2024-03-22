@@ -14,9 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "enseignant")
+@Table(name = "listeEnseignantInscit")
 @Builder
-public class Enseignant {
+public class ListeEnseignantInscit {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
@@ -25,15 +25,6 @@ public class Enseignant {
     String cin;
     Date date_nais;
     String lieu_nais;
-    int num_tel;
-    String genre;
-    String nationalite;
-    String email;
-    String password;
     String specialite;
     String grade;
-    @CreationTimestamp
-    private Instant createdAt;
-    @UpdateTimestamp
-    private  Instant updatedAt;
 }

@@ -25,28 +25,25 @@ private EtudiantRepository etudiantRepository;
 private ListeEtudiantInscritRepository listeEtudiantInscritRepository;
     private final PasswordEncoder passwordEncoder;
     private boolean isEtudiantExist(String cin){
-        if(listeEtudiantInscritRepository.existsByCin(cin)){
-            return true;
-        }else {
-        return false;}
+        return listeEtudiantInscritRepository.existsByCin(cin);
     }
     @Override
-    public void CreateEtudiant(RequestEtudiant EtudiantRequest) {
-        if (isEtudiantExist(EtudiantRequest.getCin())){
+    public void CreateEtudiant(RequestEtudiant etudiantRequest) {
+        if (isEtudiantExist(etudiantRequest.getCin())){
 Etudiant etudiant = Etudiant.builder()
-        .nom(EtudiantRequest.getNom())
-        .prenom(EtudiantRequest.getPrenom())
-        .cin(EtudiantRequest.getCin())
-        .date_nais(EtudiantRequest.getDate_nais())
-        .lieu_nais(EtudiantRequest.getLieu_nais())
-        .num_tel(EtudiantRequest.getNum_tel())
-        .genre(EtudiantRequest.getGenre())
-        .nationalite(EtudiantRequest.getNationalite())
-        .email(EtudiantRequest.getEmail())
-        .specialite(EtudiantRequest.getSpecialite())
-        .diplome(EtudiantRequest.getDiplome())
-        .situation(EtudiantRequest.getSituation())
-        .password(passwordEncoder.encode(EtudiantRequest.getPassword()))
+        .nom(etudiantRequest.getNom())
+        .prenom(etudiantRequest.getPrenom())
+        .cin(etudiantRequest.getCin())
+        .date_nais(etudiantRequest.getDate_nais())
+        .lieu_nais(etudiantRequest.getLieu_nais())
+        .num_tel(etudiantRequest.getNum_tel())
+        .genre(etudiantRequest.getGenre())
+        .nationalite(etudiantRequest.getNationalite())
+        .email(etudiantRequest.getEmail())
+        .specialite(etudiantRequest.getSpecialite())
+        .diplome(etudiantRequest.getDiplome())
+        .situation(etudiantRequest.getSituation())
+        .password(passwordEncoder.encode(etudiantRequest.getPassword()))
         .build();
 etudiantRepository.save(etudiant);
     }else {
@@ -63,20 +60,20 @@ etudiantRepository.save(etudiant);
     }
 
     @Override
-    public Etudiant updateEtudiant(Long id, RequestEtudiantUpdate EtudiantRequest) {
+    public Etudiant updateEtudiant(Long id, RequestEtudiantUpdate etudiantRequest) {
         Etudiant etudaint = etudiantRepository.findById(id).orElseThrow();
-        if(EtudiantRequest.getNom() !=null){
-            etudaint.setNom(EtudiantRequest.getNom());
+        if(etudiantRequest.getNom() !=null){
+            etudaint.setNom(etudiantRequest.getNom());
         }
-        if(EtudiantRequest.getPrenom() !=null){
-            etudaint.setPrenom(EtudiantRequest.getPrenom());
+        if(etudiantRequest.getPrenom() !=null){
+            etudaint.setPrenom(etudiantRequest.getPrenom());
         }
-        if(EtudiantRequest.getEmail() !=null){
-            etudaint.setEmail(EtudiantRequest.getEmail());
+        if(etudiantRequest.getEmail() !=null){
+            etudaint.setEmail(etudiantRequest.getEmail());
         }
 
-        if(EtudiantRequest.getNum_tel() !=0){
-            etudaint.setNum_tel(EtudiantRequest.getNum_tel());
+        if(etudiantRequest.getNum_tel() !=0){
+            etudaint.setNum_tel(etudiantRequest.getNum_tel());
         }
 
 
