@@ -24,4 +24,6 @@ public class ApplicationConfig implements WebMvcConfigurer {
                 .allowedHeaders("Origin", "X-Request-Width", "Content-Type", "Accept")
                 .allowCredentials(true);
     }
+
+
 }
